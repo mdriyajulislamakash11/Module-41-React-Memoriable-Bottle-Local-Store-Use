@@ -17,7 +17,6 @@ const Bottoles = () => {
   useEffect(() => {
     if (bottoles.length > 0) {
       const storedCard = getStoreCart();
-      console.log(storedCard, bottoles);
 
       const saveCart = [];
       for (const id of storedCard) {
@@ -25,10 +24,9 @@ const Bottoles = () => {
         if (bottles) {
           saveCart.push(bottles);
         }
-      }
-      console.log(saveCart);
+      };
       setCard(saveCart)
-    }
+    };
   }, [bottoles]);
 
   const handleAddToCard = (bottole) => {
