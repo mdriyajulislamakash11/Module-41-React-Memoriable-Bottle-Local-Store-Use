@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Bottole from "../Bottole/Bottole";
 import "./Bottoles.css";
+import { addToLS, getStoreCart } from "../../utilites/localStorage";
 
 const Bottoles = () => {
   const [bottoles, setBottoles] = useState([]);
-  const [card, setCard] = useState([])
-
+  const [card, setCard] = useState([]);
 
   useEffect(() => {
     fetch("bottoles.json")
@@ -13,9 +13,32 @@ const Bottoles = () => {
       .then((data) => setBottoles(data));
   }, []);
 
+
+
+  useEffect(() => {
+
+    if (bottoles.length > 0) {
+
+      const storedCard = getStoreCart();
+      console.log(storedCard, bottoles);
+
+      const saveCart = [];
+      for(const id of storedCard){
+        const bottles = bottoles.find((bottole) => bottole.id === id);
+        if(bottles){
+          saveCart.push(bottles)
+        }
+      }
+      console.log(saveCart)
+    }
+  }, [bottoles]);
+
+
+
   const handleAddToCard = (bottole) => {
     const newCard = [...card, bottole];
-    setCard(newCard)
+    setCard(newCard);
+    addToLS(bottole.id);
   };
 
   return (
